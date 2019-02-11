@@ -1,10 +1,16 @@
 package com.uniovi.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Mark {
+	@Id @GeneratedValue
 	private Long id;
 	private String description;
 	private Double score;
-
+	
 	public Mark(Long id, String description, Double score) {
 		super();
 		this.id = id;
