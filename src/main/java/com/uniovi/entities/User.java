@@ -2,78 +2,94 @@ package com.uniovi.entities;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class User {
-	@Id
-	@GeneratedValue
-	private long id;
-	@Column(unique = true)
-	private String dni;
-	private String name;
-	private String lastName;
-	private String role;
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Mark> marks;
+    @Id
+    @GeneratedValue
+    private long id;
+    @Column(unique = true)
+    private String dni;
+    private String name;
+    private String lastName;
 
-	public User(String dni, String name, String lastName) {
-		super();
-		this.dni = dni;
-		this.name = name;
-		this.lastName = lastName;
-	}
+    private String password;
+    @Transient
+    private String passwordConfirm;
 
-	public User() {
-	}
+    private String role;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Mark> marks;
 
-	public long getId() {
-		return id;
-	}
+    public User(String dni, String name, String lastName) {
+        super();
+        this.dni = dni;
+        this.name = name;
+        this.lastName = lastName;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public User() {
+    }
 
-	public String getDni() {
-		return dni;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getDni() {
+        return dni;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setMarks(Set<Mark> marks) {
-		this.marks = marks;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public Set<Mark> getMarks() {
-		return marks;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public String getFullName() {
-		return this.name + " " + this.lastName;
-	}
+    public void setMarks(Set<Mark> marks) {
+        this.marks = marks;
+    }
+
+    public Set<Mark> getMarks() {
+        return marks;
+    }
+
+    public String getFullName() {
+        return this.name + " " + this.lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
 
 }
