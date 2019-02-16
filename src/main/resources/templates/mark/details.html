@@ -5,18 +5,18 @@
 <head th:replace="fragments/nav" />
 
 <div class="container">
-	<h2>Detalles de la nota</h2>
+	<h2 th:text="#{mark.details}"></h2>
 	<div class="panel panel-default">
-		<div class="panel-heading">DNI</div>
+		<div class="panel-heading"  th:text="#{user.dni}"></div>
 		<div class="panel-body" th:text="${mark.user.dni}">28276</div>
 	</div>
 	<div class="panel panel-default">
-		<div class="panel-heading">Descripción</div>
+		<div class="panel-heading" th:text="#{description}"></div>
 		<div class="panel-body" th:text="${mark.description}">
 			UO238524@uniovi.es</div>
 	</div>
 	<div class="panel panel-default">
-		<div class="panel-heading">Puntuación</div>
+		<div class="panel-heading" th:text="#{score}"></div>
 		<div class="panel-body" th:text="${mark.score}">100</div>
 	</div>
 </div>

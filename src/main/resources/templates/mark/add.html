@@ -5,10 +5,10 @@
 <head th:replace="fragments/nav" />
 
 <div class="container">
-	<h2>Agregar Nota</h2>
-	<form class="form-horizontal" method="post" action="/mark/add">
+	<h2 th:text="#{mark.add}"></h2>
+	<form class="form-horizontal" method="post" action="/mark/add" th:object="${mark}">
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="user">Alumno:</label>
+			<label class="control-label col-sm-2" for="user" th:text="#{alumn}"></label>
 			<div class="col-sm-10"
 				th:if="${usersList != null and not #lists.isEmpty(usersList)}">
 				<select id="user" class="form-control" name="user">
@@ -19,22 +19,26 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="description">Descripcion:</label>
+			<label class="control-label col-sm-2" for="description"  th:text="#{description}">></label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control" name="description"
-					placeholder="Ejemplo Ejercicio 1" required="true" />
+					th:placeholder="#{placeholder.exercise}" required="true" />
+				<span class="text-danger" th:if="${#fields.hasErrors('description')}"
+					  th:errors="*{description}"/>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="pwd">Puntuación:</label>
+			<label class="control-label col-sm-2" for="pwd" th:text="#{score}"></label>
 			<div class="col-sm-10">
 				<input type="number" class="form-control" name="score"
-					placeholder="Entre 0 y 10" required="true" />
+					th:placeholder="#{placeholder.mark}" required="true" />
+				<span class="text-danger" th:if="${#fields.hasErrors('score')}"
+					  th:errors="*{score}"/>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-				<button type="submit" class="btn btn-primary">Enviar</button>
+				<button type="submit" class="btn btn-primary" th:text="#{submit}"></button>
 			</div>
 		</div>
 	</form>

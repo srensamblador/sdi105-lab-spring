@@ -4,6 +4,7 @@ import com.uniovi.entities.User;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
+import com.uniovi.validators.UserFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +27,9 @@ public class UsersController {
 
     @Autowired
     private SignUpFormValidator signUpFormValidator;
+
+    @Autowired
+    private UserFormValidator userFormValidator;
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(Model model) {
@@ -67,13 +71,22 @@ public class UsersController {
 
     @RequestMapping(value = "/user/add")
     public String getUser(Model model) {
+        model.addAttribute("user", new User());
         model.addAttribute("usersList", usersService.getUsers());
         return "user/add";
     }
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public String setUser(@ModelAttribute User user) {
-        usersService.addUser(user);
+    public String setUser(@Validated User user, BindingResult result) {
+        userFormValidator.validate(user, result);
+        if (result.hasErrors())
+            return "/user/add";
+        User toAdd = new User();
+        toAdd.setDni(user.getDni());
+        toAdd.setName(user.getName());
+        toAdd.setLastName(user.getLastName());
+        toAdd.setPassword("");
+        usersService.addUser(toAdd);
         return "redirect:/user/list";
     }
 
@@ -97,9 +110,15 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
-    public String setEdit(Model model, @PathVariable Long id, @ModelAttribute User user) {
-        user.setId(id);
-        usersService.addUser(user);
+    public String setEdit(Model model, @PathVariable Long id, @Validated User user, BindingResult result) {
+        userFormValidator.validate(user, result);
+        if (result.hasErrors())
+            return "/user/edit";
+        User original = usersService.getUser(id);
+        original.setDni(user.getDni());
+        original.setName(user.getName());
+        original.setLastName(user.getLastName());
+        usersService.updateUser(original);
         return "redirect:/user/details/" + id;
     }
 }

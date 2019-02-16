@@ -39,6 +39,10 @@ public class UsersService {
 		usersRepository.save(user);
 	}
 
+	public void updateUser(User user){
+		usersRepository.save(user);
+	}
+
 	public User getUserByDni(String dni){
 		return usersRepository.findByDni(dni);
 	}
