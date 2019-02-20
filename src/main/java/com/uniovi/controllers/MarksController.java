@@ -43,7 +43,7 @@ public class MarksController {
 	public String setMark(@Validated Mark mark, BindingResult result, Model model) {
 		marksFormValidator.validate(mark, result);
 		if (result.hasErrors()) {
-			model.addAttribute("usersList", usersService.getUsers());
+			//model.addAttribute("usersList", usersService.getUsers());
 			return "/mark/add";
 		}
 		marksService.addMark(mark);
