@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,11 @@ public class UsersService {
 		return users;
 	}
 
+	public Page<User> getPageableUsers(Pageable pageable){
+		Page<User> marks = usersRepository.findAll(pageable);
+		return marks;
+	}
+
 	public User getUser(Long id) {
 		return usersRepository.findById(id).get();
 	}
@@ -49,5 +56,11 @@ public class UsersService {
 
 	public void deleteUser(Long id) {
 		usersRepository.deleteById(id);
+	}
+
+	public Page<User> searchUsersByDniAndNameAndLastname(Pageable pageable, String searchtext){
+		searchtext = "%" + searchtext + "%";
+		Page<User> users = usersRepository.searchByDniAndNameAndLastName(pageable, searchtext);
+		return users;
 	}
 }
