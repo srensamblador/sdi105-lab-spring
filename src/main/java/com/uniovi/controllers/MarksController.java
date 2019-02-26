@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.uniovi.entities.Mark;
 import com.uniovi.services.MarksService;
@@ -36,11 +33,16 @@ public class MarksController {
 	private HttpSession httpSession;
 
 	@RequestMapping("/mark/list")
-	public String getList(Model model, Principal principal){
+	public String getList(Model model, Principal principal,
+						  @RequestParam(value="", required=false) String searchText){
 		String dni = principal.getName(); // DNI es el name de la autenticación
 		User user = usersService.getUserByDni(dni);
-		model.addAttribute("markList", marksService.getMarksForUser(user) );
-		return "mark/list";
+		if (searchText != null && !searchText.isEmpty()) {
+			model.addAttribute("markList",
+					marksService.searchMarksByDescriptionAndNameForUser (searchText, user) );
+		} else {
+			model.addAttribute("markList", marksService.getMarksForUser(user) );
+		}		return "mark/list";
 	}
 
 	@RequestMapping(value = "/mark/add")
