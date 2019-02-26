@@ -15,6 +15,10 @@ import com.uniovi.entities.Mark;
 import com.uniovi.services.MarksService;
 import com.uniovi.services.UsersService;
 
+import javax.servlet.http.HttpSession;
+import java.util.HashSet;
+import java.util.Set;
+
 @Controller
 public class MarksController {
 	@Autowired // Inyecto el servicio
@@ -26,8 +30,12 @@ public class MarksController {
 	@Autowired
 	private MarksFormValidator marksFormValidator;
 
+	@Autowired
+	private HttpSession httpSession;
+
 	@RequestMapping("/mark/list")
 	public String getList(Model model) {
+
 		model.addAttribute("markList", marksService.getMarks());
 		return "mark/list";
 	}
