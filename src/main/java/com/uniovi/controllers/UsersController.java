@@ -90,10 +90,10 @@ public class UsersController {
         if (result.hasErrors())
             return "/user/add";
         User toAdd = new User();
+        toAdd.setRole(user.getRole());
         toAdd.setDni(user.getDni());
         toAdd.setName(user.getName());
         toAdd.setLastName(user.getLastName());
-        System.out.println(user.getPassword());
         toAdd.setPassword(user.getPassword());
         usersService.addUser(toAdd);
         return "redirect:/user/list";

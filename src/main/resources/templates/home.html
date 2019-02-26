@@ -8,7 +8,7 @@
     <h3 th:text="#{welcome.privateArea}"></h3>
     <p>
         <span th:text="#{welcome.loggedAs}"/>
-        <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
+        <b th:inline="text" sec:authentication="principal.username"> </b>
     </p>
     <p  th:text="#{welcome.userMarks}">
     </p>
@@ -30,8 +30,10 @@
                 <td th:text="${mark.description}"> Ejercicio 1</td>
                 <td th:text="${mark.score}">10</td>
                 <td><a th:href="${'/mark/details/' + mark.id}"  th:text="#{details}"></a></td>
-                <td><a th:href="${'/mark/edit/' + mark.id}"  th:text="#{edit}"></a></td>
-                <td><a th:href="${'/mark/delete/' + mark.id}"  th:text="#{delete}"></a></td>
+                <td><a sec:authorize="hasRole('ROLE_PROFESSOR')"
+                        th:href="${'/mark/edit/' + mark.id}"  th:text="#{edit}"></a></td>
+                <td><a sec:authorize="hasRole('ROLE_PROFESSOR')"
+                       th:href="${'/mark/delete/' + mark.id}"  th:text="#{delete}"></a></td>
             </tr>
             </tbody>
         </table>
