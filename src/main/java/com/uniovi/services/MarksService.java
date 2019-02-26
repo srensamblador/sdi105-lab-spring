@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.uniovi.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -56,6 +57,17 @@ public class MarksService {
 		if(mark.getUser().getDni().equals(dni) ) {
 					marksRepository.updateResend(revised, id);
 		}
+	}
+
+	public List<Mark> getMarksForUser (User user){
+		List<Mark> marks = new ArrayList<Mark>();
+		if ( user.getRole().equals("ROLE_STUDENT")) {
+			marks = marksRepository.findAllByUser(user);
+		}
+		if ( user.getRole().equals("ROLE_PROFESSOR")){
+			marks = getMarks();
+		}
+		return marks;
 	}
 
 }
