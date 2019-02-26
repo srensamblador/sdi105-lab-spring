@@ -1,6 +1,7 @@
 package com.uniovi.controllers;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class UsersController {
+    @Autowired
+    private RolesService rolesService;
+
     @Autowired
     private UsersService usersService;
 
@@ -43,6 +47,7 @@ public class UsersController {
         if (result.hasErrors()) {
             return "signup";
         }
+        user.setRole(rolesService.getRoles()[0]);
         usersService.addUser(user);
         securityService.autoLogin(user.getDni(), user.getPasswordConfirm());
         return "redirect:home";
@@ -75,6 +80,7 @@ public class UsersController {
     public String getUser(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("usersList", usersService.getUsers());
+        model.addAttribute("rolesList", rolesService.getRoles());
         return "user/add";
     }
 
@@ -87,7 +93,8 @@ public class UsersController {
         toAdd.setDni(user.getDni());
         toAdd.setName(user.getName());
         toAdd.setLastName(user.getLastName());
-        toAdd.setPassword("");
+        System.out.println(user.getPassword());
+        toAdd.setPassword(user.getPassword());
         usersService.addUser(toAdd);
         return "redirect:/user/list";
     }
