@@ -1,7 +1,6 @@
 package com.uniovi.tests;
 
-import com.uniovi.tests.pageobjects.PO_HomeView;
-import com.uniovi.tests.pageobjects.PO_Properties;
+import com.uniovi.tests.pageobjects.*;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.WebDriver;
@@ -74,5 +73,98 @@ public class NotaneitorTests {
         PO_HomeView.checkChangeIdiom(driver, "btnSpanish", "btnEnglish",
                 PO_Properties.getSPANISH(), PO_Properties.getENGLISH());
         //SeleniumUtils.esperarSegundos(driver, 2);
+    }
+
+    //PR05. Prueba del formulario de registro. registro con datos correctos
+    @Test
+    public void PR05() {
+        //Vamos al formulario de registro
+        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        //Rellenamos el formulario.
+        PO_RegisterView.fillForm(driver, "77777778A", "Josefo", "Perez", "77777",
+                "77777");
+        //Comprobamos que entramos en la sección privada
+        PO_View.checkElement(driver, "text", "Notas del usuario");
+    }
+
+    //PR06. Prueba del formulario de registro. DNI repetido en la BD, Nombre corto, .... pagination
+    // pagination-centered, Error.signup.dni.length
+    @Test
+    public void PR06() {
+        //Vamos al formulario de registro
+        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        //Rellenamos el formulario.
+        PO_RegisterView.fillForm(driver, "99999990A", "Josefo", "Perez", "77777",
+                "77777");
+        PO_View.getP();
+        //COmprobamos el error de DNI repetido.
+        PO_RegisterView.checkKey(driver, "Error.signup.dni.duplicate",
+                PO_Properties.getSPANISH());
+        //Rellenamos el formulario.
+        PO_RegisterView.fillForm(driver, "99999990B", "Jose", "Perez", "77777",
+                "77777");
+        //Comprobamos el error de Nombre corto .
+        PO_RegisterView.checkKey(driver, "Error.signup.name.length",
+                PO_Properties.getSPANISH() );
+        //Rellenamos el formulario.
+        PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Per", "77777",
+                "77777");
+    }
+
+    // PR07: Identificación válida con usuario de ROL usuario ( 99999990A/123456)
+    @Test
+    public void PR07() {
+    //Vamos al formulario de logueo.
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+    //Rellenamos el formulario
+        PO_LoginView.fillForm(driver, "99999990A" , "123456" );
+    //Comprobamos que entramos en la pagina privada de Alumno
+        PO_View.checkElement(driver, "text", "Notas del usuario");
+    }
+
+    // PR08: Identificación válida con usuario de ROL profesor ( 99999993D/123456).
+    @Test
+    public void PR08() {
+        //Vamos al formulario de logueo.
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        //Rellenamos el formulario
+        PO_LoginView.fillForm(driver, "99999993D" , "123456" );
+        //Comprobamos que entramos en la pagina privada de Profesor
+        PO_View.checkElement(driver, "text", "modificar");
+    }
+
+    //PR09: Identificación válida con usuario de ROL Administrador (99999988F/123456).
+    @Test
+    public void PR09() {
+        //Vamos al formulario de logueo.
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        //Rellenamos el formulario
+        PO_LoginView.fillForm(driver, "99999988F" , "123456" );
+        //Comprobamos que entramos en la pagina privada de Administrador
+        PO_View.checkElement(driver, "text", "Gestión de Usuarios");
+    }
+
+    //PR10: PR10: Identificación inválida con usuario de ROL alumno (99999990A/123457).
+    @Test
+    public void PR10(){
+        //Vamos al formulario de logueo.
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        //Rellenamos el formulario
+        PO_LoginView.fillForm(driver, "99999990A" , "123457" );
+        //Comprobamos que estamos aún en Login
+        PO_View.checkKey(driver, "login.message", PO_Properties.getSPANISH());
+    }
+
+    // PR11: Identificación válida y desconexión con usuario de ROL usuario (99999990A/123456)
+    @Test
+    public void PR11(){
+        //Vamos al formulario de logueo.
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        //Rellenamos el formulario
+        PO_LoginView.fillForm(driver, "99999990A" , "123456" );
+        //Comprobamos que entramos en la pagina privada de Alumno
+        PO_View.checkElement(driver, "text", "Notas del usuario");
+        //Desconectamos
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 }
