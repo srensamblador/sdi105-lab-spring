@@ -1,9 +1,9 @@
 package com.uniovi.controllers;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.UsersService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
-import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
 import com.uniovi.validators.UserFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,7 +10,6 @@ import org.springframework.data.repository.CrudRepository;
 import com.uniovi.entities.Mark;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 public interface MarksRepository extends CrudRepository<Mark, Long> {
     @Modifying

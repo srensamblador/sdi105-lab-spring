@@ -1,6 +1,9 @@
 package com.uniovi.controllers;
 
+import com.uniovi.entities.Mark;
 import com.uniovi.entities.User;
+import com.uniovi.services.MarksService;
+import com.uniovi.services.UsersService;
 import com.uniovi.validators.MarksFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,15 +15,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.uniovi.entities.Mark;
-import com.uniovi.services.MarksService;
-import com.uniovi.services.UsersService;
-
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 @Controller
 public class MarksController {

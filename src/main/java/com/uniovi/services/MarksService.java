@@ -2,7 +2,9 @@ package com.uniovi.services;
 
 import java.util.*;
 
+import com.uniovi.entities.Mark;
 import com.uniovi.entities.User;
+import com.uniovi.repositories.MarksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -10,9 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import com.uniovi.entities.Mark;
-import com.uniovi.repositories.MarksRepository;
 
 import javax.servlet.http.HttpSession;
 
